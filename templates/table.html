@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Tables{% endblock %}
+{% block main %}
+<body>
+    <div class="container" style="margin-bottom:20px">
+
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-title" style="text-align:center">
+                War/Cost Table
+            </h1>
+            <div class="row" style="margin-bottom:15px">
+                <div class="col-8">
+                    <div class="dropdown">
+                        <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle btn-lg" data-toggle="dropdown" href="#" id="dropdownMenuLink" role="button">
+                            Select file to View Table
+                        </a>
+                        <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                            {% if empty %}
+                            <a class="dropdown-item" href="#">
+                                {{ message }}
+                            </a>
+                            {% else %}
+                        {% for file in data %}
+                            <a class="dropdown-item" href="/table/{{file.id}}">
+                                {{ file.name }}
+                            </a>
+                            {% endfor %}
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                 
+</body>
+{% endblock %}

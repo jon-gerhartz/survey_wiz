@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Tables{% endblock %}
+{% block main %}
+<body>
+    <div class="container" style="margin-bottom:20px">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title" style="text-align:center">
+                    War/Cost Table
+                </h1>
+                <div class="row" style="margin-bottom:15px">
+                    <div class="col-8">
+                        <div class="dropdown">
+                            <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle btn-lg" data-toggle="dropdown" href="#" id="dropdownMenuLink" role="button">
+                                Select file to View Table
+                            </a>
+                            <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                                {% if empty %}
+                                <a class="dropdown-item" href="#">
+                                    {{ message }}
+                                </a>
+                                {% else %}
+                        {% for file in data %}
+                                <a class="dropdown-item" href="/table/{{file.id}}">
+                                    {{ file.name }}
+                                </a>
+                                {% endfor %}
+                        {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <p class="card-text" style="text-align:center">
+                            <strong>
+                                Now viewing table for: {{ active.name }}
+                            </strong>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="get-file/{{ active.name }}">
+                                    Download Table
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="pills-tabContent">
+                            <div aria-labelledby="pills-home-tab" class="tab-pane fade show active" id="pills-home" role="tabpanel">
+                            </div>
+                            <div aria-labelledby="pills-profile-tab" class="tab-pane fade" id="pills-profile" role="tabpanel">
+                            </div>
+                            <div aria-labelledby="pills-contact-tab" class="tab-pane fade" id="pills-contact" role="tabpanel">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        {% for table in tables %}
+                  {{ table|safe }}
+                {% endfor %}
+    </div>
+</body>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock %}
+
+{% block main %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>
+                Upload Survey Data
+            </h1>
+            <hr>
+                {% if error %}
+                	<h2 class=error>
+                    {{ error }}
+                	</h2>
+                {% endif %}
+                <form action="/upload-file" enctype="multipart/form-data" method="POST">
+                    <div class="custom-file" style="margin:30px 0px 30px 0px">
+                        <input class="custom-file-input" id="csv" name="csv" oninput="filesize(this);" type="file">
+                            <label class="custom-file-label" for="csv">
+                                {{ filename }}
+                            </label>
+                        </input>
+                    </div>
+                    <button class="btn btn-dark" type="submit">
+                        Upload
+                    </button>
+                </form>
+            </hr>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block script %}
+<script>
+    function filesize(elem){
+
+		document.cookie = `filesize=${elem.files[0].size}`;
+	}
+
+</script>
+
+<script>
+    $('#csv').on('change',function(){
+        //get the file name
+        var fileName = $(this).val().replace('C:\\fakepath\\', " ");
+        //replace the "Choose a file" label
+        $(this).next('.custom-file-label').text(fileName);
+    })
+</script>
+{% endblock %}
