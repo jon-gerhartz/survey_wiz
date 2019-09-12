@@ -2,7 +2,10 @@ from analysis.class_survey_analysis_wizard import preclean, save_new_data, clean
 import pandas as pd
 
 
+
 def run(csv, old_doc, old_df):
+
+	
 	pre = preclean(csv)
 
 	new_data,new_df = save_new_data(pre)
@@ -24,7 +27,7 @@ def run(csv, old_doc, old_df):
 
 	total_war=new_year_war(cleaned,new_data['con_q'], new_data)
 
-	war_cats=pd.DataFrame(columns=['Condition Score','Frequency', 'Condition Score * Frequency','WAR'])
+	war_cats=pd.DataFrame(columns=['Condition Score','Frequency Score', 'Condition Score * Frequency','WAR'])
 	cat_map={'Q2':'Presentation','Q3':'Lighting','Q4':'Student Seating','Q5':'Instructional Furniture','Q6':'Writing','Q7':'Temperature','Q8':'Finishes','Q9':'Clean'}
 	for q in new_data['con_q']:
 		qwar=new_year_war(cleaned, q, new_data)
@@ -42,8 +45,8 @@ def run(csv, old_doc, old_df):
 	rooms_space_war=pd.merge(left=space_war,right=rooms,how='left',left_on='Class_ID',right_on='room_id')
 	rooms_space_war
 	slim_rooms_space_war=rooms_space_war.drop(['Building','Room Number','room_id'],axis=1)
-	slim_rooms_space_war.columns=['Category','Condition Score','Condition Score * Frquency','Frequency','WAR','NASF','Classroom','Capacity']
-	new_col_order=['Classroom','Category','Condition Score','Frequency','Condition Score * Frquency','NASF','Capacity','WAR']
+	slim_rooms_space_war.columns=['Category','Condition Score','Condition Score * Frequency','Frequency Score','WAR','NASF','Classroom','Capacity']
+	new_col_order=['Classroom','Category','Condition Score','Frequency Score','Condition Score * Frequency','NASF','Capacity','WAR']
 	slim_rooms_space_war=slim_rooms_space_war[new_col_order]
 
 	slim_rooms_space_war['Category'].unique()
@@ -58,4 +61,4 @@ def run(csv, old_doc, old_df):
 	total_uc=total_cost(data_uc)
 	total_uc['WAR/Cost']=(total_uc['WAR']/total_uc['Cost'])*100000
 	total_uc.sort_values('WAR/Cost', axis = 0, inplace=True, ascending=False)
-	return total_uc
+	return total_uc.fillna(0)

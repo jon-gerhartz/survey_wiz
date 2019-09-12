@@ -64,7 +64,7 @@ def table_id(file_id):
 
 	return render_template(
 		'table_view.html',
-		tables=[final_df.to_html()], data = data, active = active
+		tables=[final_df.to_html(table_id='myTable')], data = data, active = active
 		)
 
 
@@ -78,15 +78,10 @@ def get_file(file_name):
 	except FileNotFoundError:
 		abort(404)
 
-@app.route('/graphs')
-def view_graphs():
-	final_df=run(csv,old_doc,old_df)
-	return render_template('graphs.html', final_df=final_df)
 
-
-@app.route('/instructions')
+@app.route('/documentation')
 def view_instructions():
-    return render_template('instructions.html')
+    return render_template('doc.html')
 
 def allowed_csv(filename):
 	if not "." in filename:

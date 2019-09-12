@@ -3,6 +3,11 @@
 
 import pandas as pd
 import numpy as np
+from analysis.rooms import occupancy
+
+path = "C:/Users/jgerhartz/projects/survey_wiz/static/csv/rooms.csv"
+occup = occupancy(path)
+
 
 def preclean (csv):
     raw=pd.read_csv(csv, encoding='latin1')
@@ -106,11 +111,18 @@ def new_year_war (clean, questions, new_data):
     means=pivot.mean(level=0,axis=1) #combines each classroom value into one classroom value which represents the mean of all the values for that classroom
     means_means=means.mean(axis=1) #combines scores of each question to give one mean condition score for each class room 
     con_19=pd.DataFrame(data=means_means) #converts above into a dataframe
-    freq=year_df['ClassRoom'].value_counts() #creates a dataframe "freq" which counts the frequency each classroom is found in the year_df
-    war_df=pd.concat([con_19,freq],axis=1,sort=True) #concats condition score df and frequency into the war_df
-    war_df.columns=['Condition Score','Frequency'] #renames columns in war_df
-    war_df['Condition Score * Frequency']=war_df['Condition Score']*war_df['Frequency'] #creates condition*frequency column
-    war_df['WAR']=(((war_df['Condition Score * Frequency'].sum(axis=0))-war_df['Condition Score * Frequency']+(war_df['Frequency']*4))/(war_df['Frequency'].sum(axis=0)))-((war_df['Condition Score * Frequency'].sum(axis=0)/war_df['Frequency'].sum(axis=0))) #calculates WAR stat
+    freq1=year_df['ClassRoom'].value_counts() #creates a dataframe "freq" which counts the frequency each classroom is found in the year_df
+    freq = freq1.to_frame()
+    freq_table = freq.merge(occup, how='left', left_index=True, right_on='building_code')
+    freq_table['Hours/Week'].fillna(0, inplace=True)
+    freq_table['Frequency Score'] = freq_table['Hours/Week'] + freq_table['ClassRoom']
+    freq_table.index=freq_table['building_code']
+    cols = ['Frequency Score']
+    freq_table = freq_table[cols]
+    war_df=pd.concat([con_19,freq_table],axis=1,sort=True) #concats condition score df and frequency into the war_df
+    war_df.columns=['Condition Score','Frequency Score'] #renames columns in war_df
+    war_df['Condition Score * Frequency']=war_df['Condition Score']*war_df['Frequency Score'] #creates condition*frequency column
+    war_df['WAR']=(((war_df['Condition Score * Frequency'].sum(axis=0))-war_df['Condition Score * Frequency']+(war_df['Frequency Score']*4))/(war_df['Frequency Score'].sum(axis=0)))-((war_df['Condition Score * Frequency'].sum(axis=0)/war_df['Frequency Score'].sum(axis=0))) #calculates WAR stat
     return war_df
 
 
