@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock %}
+
+{% block main %}
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<h1>Instructions</h1>
+			<p>Get Started</p>
+			<ol>
+				<li>
+					<p>Visit the "Upload" page and upload your csv. File must my a .csv and has to be classroom survey data from qualtrics.</p>
+					<ul>
+						<li>
+						<p>If your file was uploaded correctly, you will see a message in the top right of the screen "file name Uploaded". If you recieve this message move on to step 2</p>
+					</li>
+					<li>
+						<p>If your file was not uploaded, you will see an error message with the specific issue with your file. Your file may be too big or the wrong file type.  </p>
+					</li>
+					</ul>
+				</li>
+				<li>
+					<p>After a successful file upload, navigate to "Tables" to view your table</p>
+				</li>
+				<li>
+					<p>From Tables, you can view your data in a table format and use the menu bar to sort your data, or download it to load in excel. </p>
+				</li>
+				<li>
+					<p>To view your table, select your filename from the drop down menu. If your file is not survey data from qualtrics, you will see an error message and your table will not load. Please upload a qualtrics survey .csv file or choose another table to load.</p>
+				</li>
+				<li>
+					<p>When you've chosen a table and it has loaded, score to see more results. You can use the menubar to toggle sorting. You can sort the table by the WAR column, the WAR/Cost column or the Classroom Column. Click once to sort data in ascending order and twice to sort in decending order. Refresh the page to return the data back to the original order.</p>
+				</li>
+				<li>
+					<p>Have questions? Email Jonathan </p> <a href="mailto:jgerhartz@ursinus.edu">jgerhartz@ursinus.edu</a>
+				</li>
+			</ol>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

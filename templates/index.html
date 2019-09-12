@@ -2,13 +2,28 @@
 
 
 {% block main %}
-
 <div class="container">
-	<div class="row">
-		<div class="col">
-			<h1>Home</h1>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col">
+            
+            <div class="jumbotron">
+                <h1 class="display-4">
+                    Ursinus College Classroom Survey Wizard
+                </h1>
+                    <p class="lead">
+                        This is a UC custom tool build to inform users on the most cost effective facilities projects to complete
+                    </p>
+                    <hr class="my-4">
+                        <p>
+                            First time user? Click "Get Started" Below to read our Documentation
+                        </p>
+                        <a class="btn btn-primary btn-lg" href="{{url_for('view_instructions')}}" role="button">
+                            Get Started
+                        </a>
+                    </hr>
+                </img>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
 </div>
-
-{% endblock %}
